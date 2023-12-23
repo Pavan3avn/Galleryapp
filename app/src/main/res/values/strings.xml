@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Imagegallery</string>
+    <string name="home">Home</string>
+    <string name="about_us">about us</string>
+    <string name="gallery_app">Gallery app</string>
+    <string name="open_nav">open nav</string>
+    <string name="close_nav">close</string>
+</resources>
