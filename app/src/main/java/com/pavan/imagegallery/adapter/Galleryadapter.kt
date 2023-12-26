@@ -4,15 +4,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.pavan.imagegallery.R
 import com.pavan.imagegallery.model.Imageitem
 
-class galleryadapter( private val imagelist : List<Imageitem>):
-    RecyclerView.Adapter<galleryadapter.viewholder>() {
+class galleryadapter():
+    PagingDataAdapter<Imageitem,galleryadapter.viewholder>(PhotoDiffCallback()) {
    inner class viewholder(v: View) : RecyclerView.ViewHolder(v) {
        val imageview : ImageView = v.findViewById(R.id.imageView)
+       val textview : TextView = v.findViewById(R.id.name)
+       fun bind(photo: Imageitem) {
+           Glide.with(itemView.context)
+               .load(photo.imageUrl)
+               .apply(RequestOptions.placeholderOf(R.drawable.man))
+               .into(imageview)
+
+              textview.text = photo.title
+
+       }
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewholder {
@@ -22,14 +38,24 @@ class galleryadapter( private val imagelist : List<Imageitem>):
     }
 
     override fun onBindViewHolder(holder: viewholder, position: Int) {
-        val imageItem = imagelist[position]
-        Glide.with(holder.itemView)
-            .load(imageItem.imageUrl)
-            .into(holder.imageview)
+        val photo = getItem(position)
+        photo?.let { holder.bind(it) }
+    
     }
 
-    override fun getItemCount(): Int {
-        return imagelist.size
+
     }
+
+
+
+
+    private class PhotoDiffCallback : DiffUtil.ItemCallback<Imageitem>() {
+        override fun areItemsTheSame(oldItem: Imageitem, newItem: Imageitem): Boolean {
+            return oldItem.imageUrl == newItem.imageUrl
+        }
+
+        override fun areContentsTheSame(oldItem: Imageitem, newItem: Imageitem): Boolean {
+            return oldItem == newItem
+        }
 
 }

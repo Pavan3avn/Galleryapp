@@ -24,14 +24,37 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <SearchView
+            android:id="@+id/searchview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/searchbg"
+            android:elevation="5dp"
+            android:queryHint="Search..."
+            android:searchIcon="@drawable/round_search"
+            />
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/searchview"
+            android:layout_marginTop="5dp"
+            android:background="?android:attr/windowBackground"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:id="@+id/recyclerview"
+            android:layout_below="@id/searchview"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
+            android:layout_margin="3dp"
             />
 
     </RelativeLayout>
